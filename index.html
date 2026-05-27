@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Mi Espacio Académico | Cozy Dashboard</title>
+    
+    <!-- Core Responsive Styling -->
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+
+    <!-- MAIN DASHBOARD CONTAINER -->
+    <div class="dashboard-container">
+        
+        <!-- 1. HEADER SECTION (Notion-like Header & Settings Button) -->
+        <header class="app-header">
+            <div class="header-left">
+                <span class="header-icon">🌸</span>
+                <div class="header-title-text">
+                    <h1>Mi Espacio Académico</h1>
+                    <p>Organiza tus cursos, horarios y pendientes con calma ✨</p>
+                </div>
+            </div>
+            <button class="settings-btn" id="btn-settings-toggle" title="Ajustes de Supabase">⚙️</button>
+        </header>
+
+        <!-- 2. DYNAMIC WEEKLY CALENDAR (Top Block) -->
+        <section class="notion-block calendar-block">
+            <div class="calendar-header">
+                <div class="current-month" id="current-month">Mayo 2026</div>
+                <div class="calendar-nav">
+                    <button class="nav-btn" id="btn-prev-week">◀ Ant</button>
+                    <button class="nav-btn" id="btn-today">Hoy 📅</button>
+                    <button class="nav-btn" id="btn-next-week">Sig ▶</button>
+                </div>
+            </div>
+            <!-- Horizontal cards Mon-Sun -->
+            <div class="week-cards-container" id="week-cards-container">
+                <!-- Dynamically generated via JS -->
+            </div>
+        </section>
+
+        <!-- 3. TWO-COLUMN GRID (Middle Section) -->
+        <div class="middle-grid">
+            
+            <!-- BOTTOM LEFT: LIVE SCHEDULE & TIMETABLE -->
+            <section class="notion-block schedule-block">
+                <div class="block-header">
+                    <h2 class="block-title">📚 Horario del Día</h2>
+                </div>
+                <div class="schedule-container" id="schedule-container">
+                    <!-- Dynamically generated via JS -->
+                </div>
+            </section>
+
+            <!-- MIDDLE RIGHT: DYNAMIC TASK MANAGER / "PENDIENTES" -->
+            <section class="notion-block tasks-block">
+                <div class="block-header" style="margin-bottom: 8px;">
+                    <h2 class="block-title">✍️ Pendientes</h2>
+                    <span id="task-clear-filter-container" style="display: none;"></span>
+                </div>
+                
+                <!-- Filter state label (e.g. date vs course) -->
+                <div class="task-filter-info" id="task-filter-info">
+                    <span id="task-filter-title">Cargando pendientes...</span>
+                </div>
+
+                <!-- Quick add input box -->
+                <form id="task-quick-add-form" class="task-quick-add">
+                    <input type="text" id="task-title-input" class="task-input" placeholder="Nueva tarea pendiente..." required>
+                    
+                    <select id="task-course-select" class="form-select" style="max-width: 130px; font-size: 0.85rem; border-radius: 10px; padding: 6px;">
+                        <option value="">🌸 Sin Curso</option>
+                    </select>
+
+                    <button type="submit" class="add-task-btn">Agregar</button>
+                </form>
+
+                <!-- Tasks scrollable checklist -->
+                <div class="task-list" id="task-list">
+                    <!-- Dynamically generated via JS -->
+                </div>
+            </section>
+            
+        </div>
+
+        <!-- 4. PERSONALIZED COURSE GALLERY (Bottom Section) -->
+        <section class="notion-block gallery-block">
+            <div class="block-header">
+                <h2 class="block-title">🌸 Mis Cursos</h2>
+            </div>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Add course dashed card trigger -->
+                <div class="add-course-card" id="add-course-card-trigger">
+                    <span class="add-course-icon">🌸</span>
+                    <span class="add-course-text">+ Agregar Curso</span>
+                </div>
+                <!-- Dynamically generated courses list -->
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ==========================================================================
+       MODALS & DIALOGS (Notion layout popups)
+       ========================================================================== -->
+
+    <!-- A. IN-APP DATABASE SETTINGS MODAL (Supabase Credentials) -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-container" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 class="modal-title">⚙️ Conexión de Datos</h3>
+                <button class="modal-close" id="btn-close-settings">✕</button>
+            </div>
+            
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">
+                Para sincronizar tu dashboard en tu teléfono u otros dispositivos, ingresa tus credenciales de Supabase. De lo contrario, tus datos se guardarán automáticamente en tu navegador (LocalStorage).
+            </p>
+
+            <!-- Active Database Status Indicator -->
+            <div id="db-status-badge" style="padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; text-align: center; border: 1.5px solid var(--border-color);">
+                Cargando estado de la base de datos...
+            </div>
+
+            <form id="settings-form">
+                <div class="form-group">
+                    <label class="form-label">Supabase URL</label>
+                    <input type="url" id="settings-db-url" class="form-input" placeholder="https://xxxx.supabase.co">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Supabase Anon Key</label>
+                    <input type="password" id="settings-db-key" class="form-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-danger" id="btn-disconnect-db" style="margin-right: auto; padding: 10px 14px; font-size:0.85rem;">Desconectar</button>
+                    <button type="button" class="btn-secondary" id="btn-cancel-settings">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- B. ADD NEW COURSE MODAL -->
+    <div class="modal-overlay" id="add-course-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">🌸 Registrar Nuevo Curso</h3>
+                <button class="modal-close" id="btn-close-add-course">✕</button>
+            </div>
+            
+            <form id="add-course-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="course-name-input">Nombre del Curso</label>
+                        <input type="text" id="course-name-input" class="form-input" placeholder="e.g., Desarrollo Web" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="course-code-input">Código/Sigla</label>
+                        <input type="text" id="course-code-input" class="form-input" placeholder="e.g., WEB-301" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="course-day-select">Día de la semana</label>
+                    <select id="course-day-select" class="form-select" required>
+                        <option value="">Selecciona el día...</option>
+                        <option value="1">Lunes (Pink 🌸)</option>
+                        <option value="2">Martes (Peach 🍑)</option>
+                        <option value="3">Miércoles (Mint 🌿)</option>
+                        <option value="4">Jueves (Yellow ☀️)</option>
+                        <option value="5">Viernes (Lavender 🪻)</option>
+                        <option value="6">Sábado (Purple 🦄)</option>
+                        <option value="7">Domingo (Gray 📂)</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="course-start-time">Hora Inicio</label>
+                        <input type="time" id="course-start-time" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="course-end-time">Hora Fin</label>
+                        <input type="time" id="course-end-time" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="course-prof-input">Profesor(a)</label>
+                        <input type="text" id="course-prof-input" class="form-input" placeholder="e.g., Dra. Ana Flores">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="course-room-input">Aula / Enlace</label>
+                        <input type="text" id="course-room-input" class="form-input" placeholder="e.g., Lab 4">
+                    </div>
+                </div>
+
+                <!-- Custom Color Selector Harmony -->
+                <div class="form-group">
+                    <label class="form-label">Armonía de Color</label>
+                    <div class="color-selector">
+                        <label class="color-radio">
+                            <input type="radio" name="course-color" value="pink" checked>
+                            <span class="color-pill" style="background-color: var(--color-mon-bg); border-color: var(--color-mon-border);"></span>
+                        </label>
+                        <label class="color-radio">
+                            <input type="radio" name="course-color" value="peach">
+                            <span class="color-pill" style="background-color: var(--color-tue-bg); border-color: var(--color-tue-border);"></span>
+                        </label>
+                        <label class="color-radio">
+                            <input type="radio" name="course-color" value="mint">
+                            <span class="color-pill" style="background-color: var(--color-wed-bg); border-color: var(--color-wed-border);"></span>
+                        </label>
+                        <label class="color-radio">
+                            <input type="radio" name="course-color" value="yellow">
+                            <span class="color-pill" style="background-color: var(--color-thu-bg); border-color: var(--color-thu-border);"></span>
+                        </label>
+                        <label class="color-radio">
+                            <input type="radio" name="course-color" value="lavender">
+                            <span class="color-pill" style="background-color: var(--color-fri-bg); border-color: var(--color-fri-border);"></span>
+                        </label>
+                        <label class="color-radio">
+                            <input type="radio" name="course-color" value="purple">
+                            <span class="color-pill" style="background-color: var(--color-sat-bg); border-color: var(--color-sat-border);"></span>
+                        </label>
+                        <label class="color-radio">
+                            <input type="radio" name="course-color" value="gray">
+                            <span class="color-pill" style="background-color: var(--color-sun-bg); border-color: var(--color-sun-border);"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="btn-cancel-add-course">Cancelar</button>
+                    <button type="submit" class="btn-primary">Registrar Curso</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- C. COURSE NOTES & DETAILED REMINDERS MODAL -->
+    <div class="modal-overlay" id="course-details-modal">
+        <div class="modal-container" style="max-width: 600px;">
+            <div class="modal-header" style="border-bottom: 1.5px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;">
+                <h3 class="modal-title" id="details-title">📚 WEB-301 - Desarrollo Web</h3>
+                <button class="modal-close" id="btn-close-course-details">✕</button>
+            </div>
+            
+            <!-- Quick Info Block -->
+            <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 14px; margin-bottom: 20px; font-size: 0.85rem; padding: 12px; border-radius: 12px; background: var(--bg-main); border: 1px solid var(--border-color);">
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <span id="details-schedule" style="font-weight: 600;">🗓 Lunes • 07:30 - 09:00</span>
+                    <span id="details-prof">👩‍🏫 Prof. Ana Flores</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px; text-align: right;">
+                    <span id="details-room">📍 Aula Lab 4</span>
+                </div>
+            </div>
+
+            <!-- Notes Notepad -->
+            <div class="form-group">
+                <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>📝 Cuaderno de Apuntes</span>
+                    <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: none; font-weight: normal;">Guardado automático / Manual</span>
+                </label>
+                <textarea id="details-notes" class="form-textarea" style="min-height: 250px; font-family: var(--font-body); font-size: 0.9rem; line-height: 1.6;" placeholder="Escribe tus notas, tareas, recordatorios de exámenes, syllabus o enlaces rápidos aquí..."></textarea>
+            </div>
+
+            <div class="modal-actions" style="border-top: 1.5px solid var(--border-color); padding-top: 16px; margin-top: 20px;">
+                <button type="button" class="btn-danger" id="btn-delete-course" title="Eliminar Curso de por vida">Borrar Curso 🗑️</button>
+                <button type="button" class="btn-secondary" id="btn-close-notes">Cerrar</button>
+                <button type="button" class="btn-primary" id="btn-save-course-notes">Guardar Notas 🌸</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       SCRIPTS IMPORT SEQUENTIAL SYSTEM
+       ========================================================================== -->
+    
+    <!-- 1. Supabase Javascript Official Client via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 2. Dual-Mode Storage Engine -->
+    <script src="src/js/db.js"></script>
+    
+    <!-- 3. Dynamic UI Modules -->
+    <script src="src/js/calendar.js"></script>
+    <script src="src/js/schedule.js"></script>
+    <script src="src/js/tasks.js"></script>
+    <script src="src/js/courses.js"></script>
+    
+    <!-- 4. Global Controller (Initialization and Event Wirings) -->
+    <script src="src/js/app.js"></script>
+</body>
+</html>

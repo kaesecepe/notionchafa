@@ -1,0 +1,1111 @@
+/* 🌸 COZY ACADEMIC DASHBOARD - STYLE SYSTEM 🌸
+   Inspired by Notion's minimalist block layout with a warm, soft-pastel pink theme.
+   Optimized for both Desktop and Mobile (Responsive design). */
+
+/* --- GOOGLE FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+/* --- CUSTOM VARIABLES & THEME --- */
+:root {
+    /* Fonts */
+    --font-header: 'Outfit', sans-serif;
+    --font-body: 'Quicksand', sans-serif;
+
+    /* Theme Colors (Cozy Rose Palette) */
+    --bg-main: hsl(350, 40%, 98%);         /* Cozy warm cream/pink */
+    --bg-card: #ffffff;                    /* Pure white for blocks */
+    --border-color: hsl(350, 20%, 93%);    /* Soft warm borders */
+    --border-hover: hsl(350, 40%, 88%);
+    --text-main: hsl(350, 15%, 25%);       /* Soft chocolate/dark charcoal */
+    --text-muted: hsl(350, 10%, 55%);      /* Dimmed pinkish-gray */
+    
+    /* Cozy Accents */
+    --primary-rose: hsl(350, 60%, 85%);    /* Signature soft pink */
+    --primary-rose-hover: hsl(350, 50%, 78%);
+    --primary-rose-light: hsl(350, 70%, 95%);
+    --shadow-sm: 0 2px 6px rgba(243, 193, 198, 0.1);
+    --shadow-md: 0 8px 24px rgba(243, 193, 198, 0.15);
+    
+    /* Day-Specific Soft Pastel Harmonies */
+    --color-mon-bg: hsl(350, 85%, 96%);
+    --color-mon-border: hsl(350, 50%, 88%);
+    --color-mon-text: hsl(350, 50%, 35%);
+
+    --color-tue-bg: hsl(25, 85%, 95%);
+    --color-tue-border: hsl(25, 55%, 86%);
+    --color-tue-text: hsl(25, 55%, 35%);
+
+    --color-wed-bg: hsl(80, 45%, 94%); /* Mint Green instead of yellow for Wed */
+    --color-wed-border: hsl(80, 35%, 86%);
+    --color-wed-text: hsl(80, 40%, 32%);
+
+    --color-thu-bg: hsl(155, 50%, 94%); /* Pastel teal/mint */
+    --color-thu-border: hsl(155, 35%, 86%);
+    --color-thu-text: hsl(155, 40%, 32%);
+
+    --color-fri-bg: hsl(265, 60%, 96%); /* Lavender */
+    --color-fri-border: hsl(265, 40%, 88%);
+    --color-fri-text: hsl(265, 45%, 42%);
+
+    --color-sat-bg: hsl(310, 60%, 96%); /* Rose Violet */
+    --color-sat-border: hsl(310, 40%, 88%);
+    --color-sat-text: hsl(310, 45%, 42%);
+
+    --color-sun-bg: hsl(30, 20%, 94%); /* Warm Sand */
+    --color-sun-border: hsl(30, 15%, 85%);
+    --color-sun-text: hsl(30, 15%, 35%);
+
+    --transition-cozy: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* --- RESET & GENERAL --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent; /* Smooth mobile tap experience */
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Cozy Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-rose);
+}
+
+/* --- LAYOUT WRAPPER (Max Width) --- */
+.dashboard-container {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* --- NOTION BLOCK CARD BASE --- */
+.notion-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-cozy);
+}
+
+.notion-block:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-hover);
+}
+
+.block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.block-title {
+    font-family: var(--font-header);
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* --- HEADER SECTION --- */
+header.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 20px 8px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-icon {
+    font-size: 2.5rem;
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.header-title-text h1 {
+    font-family: var(--font-header);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+}
+
+.header-title-text p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.settings-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-cozy);
+}
+
+.settings-btn:hover {
+    transform: rotate(45deg);
+    color: var(--text-main);
+    background: var(--primary-rose-light);
+    border-color: var(--primary-rose);
+}
+
+/* --- DYNAMIC WEEKLY CALENDAR (Top) --- */
+.calendar-block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.current-month {
+    font-family: var(--font-header);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.calendar-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 500;
+    transition: var(--transition-cozy);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-btn:hover {
+    background: var(--primary-rose-light);
+    border-color: var(--primary-rose);
+}
+
+/* Weekly card layout */
+.week-cards-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.day-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-cozy);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.day-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-rose);
+    box-shadow: 0 4px 12px rgba(243, 193, 198, 0.2);
+}
+
+.day-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.day-number {
+    font-family: var(--font-header);
+    font-size: 1.4rem;
+    font-weight: 700;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition-cozy);
+}
+
+/* Day highlighting rules */
+.day-card.today {
+    border-color: var(--primary-rose);
+    background: var(--primary-rose-light);
+}
+
+.day-card.today .day-number {
+    background: var(--primary-rose);
+    color: #ffffff;
+}
+
+.day-card.selected {
+    border: 2px solid var(--primary-rose);
+    box-shadow: 0 4px 12px rgba(243, 193, 198, 0.2);
+}
+
+.day-card.selected .day-name {
+    color: var(--text-main);
+}
+
+/* Color-coded day-cards depending on day-of-week for schedule highlights */
+.day-card[data-day="1"]:hover, .day-card[data-day="1"].selected { background: var(--color-mon-bg); border-color: var(--color-mon-border); }
+.day-card[data-day="2"]:hover, .day-card[data-day="2"].selected { background: var(--color-tue-bg); border-color: var(--color-tue-border); }
+.day-card[data-day="3"]:hover, .day-card[data-day="3"].selected { background: var(--color-wed-bg); border-color: var(--color-wed-border); }
+.day-card[data-day="4"]:hover, .day-card[data-day="4"].selected { background: var(--color-thu-bg); border-color: var(--color-thu-border); }
+.day-card[data-day="5"]:hover, .day-card[data-day="5"].selected { background: var(--color-fri-bg); border-color: var(--color-fri-border); }
+.day-card[data-day="6"]:hover, .day-card[data-day="6"].selected { background: var(--color-sat-bg); border-color: var(--color-sat-border); }
+.day-card[data-day="7"]:hover, .day-card[data-day="7"].selected { background: var(--color-sun-bg); border-color: var(--color-sun-border); }
+
+/* --- TWO COLUMN MIDDLE GRID --- */
+.middle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 20px;
+}
+
+/* --- BOTTOM LEFT SECTION: LIVE SCHEDULE / TIMETABLE --- */
+.schedule-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.schedule-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.empty-schedule {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 40px 10px;
+    font-size: 0.95rem;
+    background: var(--bg-main);
+    border-radius: 12px;
+    border: 1px dashed var(--border-color);
+}
+
+/* Course card color mapping */
+.course-schedule-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition-cozy);
+    cursor: pointer;
+}
+
+.course-schedule-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.course-schedule-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.course-schedule-name {
+    font-family: var(--font-header);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.course-schedule-meta {
+    font-size: 0.8rem;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.course-schedule-time {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    gap: 4px;
+}
+
+.course-day-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+/* Dynamic Schedule Colors */
+.course-card-pink { background: var(--color-mon-bg); border-color: var(--color-mon-border); color: var(--color-mon-text); }
+.course-card-pink .course-day-tag { background: rgba(255,255,255,0.7); }
+
+.course-card-peach { background: var(--color-tue-bg); border-color: var(--color-tue-border); color: var(--color-tue-text); }
+.course-card-peach .course-day-tag { background: rgba(255,255,255,0.7); }
+
+.course-card-yellow { background: var(--color-wed-bg); border-color: var(--color-wed-border); color: var(--color-wed-text); }
+.course-card-yellow .course-day-tag { background: rgba(255,255,255,0.7); }
+
+.course-card-mint { background: var(--color-thu-bg); border-color: var(--color-thu-border); color: var(--color-thu-text); }
+.course-card-mint .course-day-tag { background: rgba(255,255,255,0.7); }
+
+.course-card-lavender { background: var(--color-fri-bg); border-color: var(--color-fri-border); color: var(--color-fri-text); }
+.course-card-lavender .course-day-tag { background: rgba(255,255,255,0.7); }
+
+.course-card-purple { background: var(--color-sat-bg); border-color: var(--color-sat-border); color: var(--color-sat-text); }
+.course-card-purple .course-day-tag { background: rgba(255,255,255,0.7); }
+
+.course-card-gray { background: var(--color-sun-bg); border-color: var(--color-sun-border); color: var(--color-sun-text); }
+.course-card-gray .course-day-tag { background: rgba(255,255,255,0.7); }
+
+
+/* --- MIDDLE RIGHT SECTION: DYNAMIC TASK MANAGER / PENDIENTES --- */
+.tasks-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-filter-info {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.clear-filter-btn {
+    background: transparent;
+    border: none;
+    color: var(--primary-rose);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.clear-filter-btn:hover {
+    color: var(--primary-rose-hover);
+}
+
+.task-quick-add {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.task-input {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    background: var(--bg-main);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-main);
+    transition: var(--transition-cozy);
+}
+
+.task-input:focus {
+    outline: none;
+    border-color: var(--primary-rose);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(243, 193, 198, 0.25);
+}
+
+.add-task-btn {
+    background: var(--primary-rose);
+    border: none;
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 600;
+    transition: var(--transition-cozy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-task-btn:hover {
+    background: var(--primary-rose-hover);
+    transform: scale(1.02);
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 290px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.empty-tasks {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 40px 10px;
+    font-size: 0.95rem;
+    background: var(--bg-main);
+    border-radius: 12px;
+    border: 1px dashed var(--border-color);
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-cozy);
+    animation: slideIn 0.3s ease;
+}
+
+.task-item:hover {
+    border-color: var(--primary-rose);
+    background: var(--primary-rose-light);
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.task-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+/* Custom Cozy Checkbox */
+.custom-checkbox-container {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.custom-checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: transparent;
+    border: 2px solid var(--border-hover);
+    border-radius: 6px;
+    transition: var(--transition-cozy);
+}
+
+.custom-checkbox-container:hover input ~ .checkbox-checkmark {
+    border-color: var(--primary-rose);
+    background-color: var(--primary-rose-light);
+}
+
+.custom-checkbox-container input:checked ~ .checkbox-checkmark {
+    background-color: var(--primary-rose);
+    border-color: var(--primary-rose);
+}
+
+.checkbox-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox-container input:checked ~ .checkbox-checkmark:after {
+    display: block;
+}
+
+.custom-checkbox-container .checkbox-checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg);
+}
+
+/* Task Title Fading & Strike-through */
+.task-title {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: var(--transition-cozy);
+    word-break: break-word;
+}
+
+.task-item.completed .task-title {
+    text-decoration: line-through;
+    opacity: 0.45;
+    color: var(--text-muted);
+}
+
+.task-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.task-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.task-tag-course {
+    background: var(--primary-rose-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.task-tag-date {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+.task-delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-cozy);
+}
+
+.task-delete-btn:hover {
+    color: #e07a7a;
+    background: #ffebeb;
+}
+
+
+/* --- BOTTOM SECTION: PERSONALIZED COURSE GALLERY ("Mis Cursos") --- */
+.gallery-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.course-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 20px;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition-cozy);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px;
+}
+
+.course-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.course-card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.course-code {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.course-name {
+    font-family: var(--font-header);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.course-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.course-tasks-count {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+.course-card-color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0,0,0,0.05);
+}
+
+/* Course Specific Pastel Accents for Gallery Grid */
+.course-card.pink { border-top: 5px solid var(--color-mon-border); }
+.course-card.pink .course-card-color-dot { background: var(--color-mon-border); }
+
+.course-card.peach { border-top: 5px solid var(--color-tue-border); }
+.course-card.peach .course-card-color-dot { background: var(--color-tue-border); }
+
+.course-card.yellow { border-top: 5px solid var(--color-wed-border); }
+.course-card.yellow .course-card-color-dot { background: var(--color-wed-border); }
+
+.course-card.mint { border-top: 5px solid var(--color-thu-border); }
+.course-card.mint .course-card-color-dot { background: var(--color-thu-border); }
+
+.course-card.lavender { border-top: 5px solid var(--color-fri-border); }
+.course-card.lavender .course-card-color-dot { background: var(--color-fri-border); }
+
+.course-card.purple { border-top: 5px solid var(--color-sat-border); }
+.course-card.purple .course-card-color-dot { background: var(--color-sat-border); }
+
+.course-card.gray { border-top: 5px solid var(--color-sun-border); }
+.course-card.gray .course-card-color-dot { background: var(--color-sun-border); }
+
+/* Add Course Card trigger */
+.add-course-card {
+    background: transparent;
+    border: 2px dashed var(--border-color);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    min-height: 140px;
+    transition: var(--transition-cozy);
+    color: var(--text-muted);
+}
+
+.add-course-card:hover {
+    border-color: var(--primary-rose);
+    color: var(--text-main);
+    background: var(--bg-card);
+    transform: translateY(-2px);
+}
+
+.add-course-icon {
+    font-size: 2rem;
+}
+
+.add-course-text {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+
+/* --- MODALS & DIALOGS (Notion popup theme) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(60, 53, 53, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 28px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-md);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.modal-overlay.active .modal-container {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    font-family: var(--font-header);
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-close {
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: var(--transition-cozy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+}
+
+.modal-close:hover {
+    color: var(--text-main);
+    background: var(--bg-main);
+}
+
+/* Modal form items */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.form-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-input, .form-select, .form-textarea {
+    border: 1px solid var(--border-color);
+    background: var(--bg-main);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--text-main);
+    transition: var(--transition-cozy);
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--primary-rose);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(243, 193, 198, 0.25);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.color-selector {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.color-radio {
+    position: relative;
+    cursor: pointer;
+    aspect-ratio: 1;
+}
+
+.color-radio input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.color-pill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: var(--transition-cozy);
+}
+
+.color-radio input:checked ~ .color-pill {
+    transform: scale(1.15);
+    border-color: var(--text-main);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Modal Actions */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 600;
+    transition: var(--transition-cozy);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-main);
+    color: var(--text-main);
+}
+
+.btn-primary {
+    background: var(--primary-rose);
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 600;
+    transition: var(--transition-cozy);
+}
+
+.btn-primary:hover {
+    background: var(--primary-rose-hover);
+}
+
+.btn-danger {
+    background: #ffebeb;
+    border: 1px solid #ffc9c9;
+    color: #e07a7a;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-weight: 600;
+    transition: var(--transition-cozy);
+}
+
+.btn-danger:hover {
+    background: #ffd6d6;
+    color: #cc5c5c;
+}
+
+/* --- MOBILE SPECIFIC RESPONSIVENESS & ADAPTATIONS --- */
+@media (max-width: 850px) {
+    body {
+        padding: 12px;
+    }
+
+    .dashboard-container {
+        gap: 16px;
+    }
+
+    .notion-block {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    /* Stack calendar navigation on mobile */
+    .calendar-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .calendar-nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Kinetic Horiztonal Scroll for Weekly Calendar on Mobile */
+    .week-cards-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 8px;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+    }
+
+    .day-card {
+        flex: 0 0 65px;
+        padding: 12px 6px;
+        scroll-snap-align: start;
+    }
+
+    /* Stack Middle Columns on Mobile */
+    .middle-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .schedule-container {
+        max-height: 280px;
+    }
+
+    .task-list {
+        max-height: 280px;
+    }
+
+    /* Gallery Grid Adaptation */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .course-card {
+        padding: 16px;
+        min-height: 120px;
+    }
+
+    .course-name {
+        font-size: 1.05rem;
+    }
+    
+    .add-course-card {
+        min-height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    header.app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .settings-btn {
+        align-self: flex-end;
+        margin-top: -45px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
